@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO-CURE Enterprise - Advanced Procurement & KPIs Analytics</title>
-    <!-- Tailwind CSS CDN -->
+    <title>PRO-CURE Enterprise - Advanced Procurement WebApp</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter & Mitr -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -38,126 +35,560 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Header / Navigation (Premium Navy & Grey Theme) -->
-    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 no-print text-slate-100 shadow-md">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="p-2 bg-slate-700 rounded-xl text-indigo-400 border border-slate-600">
-                    <i class="fa-solid fa-chart-line text-xl"></i>
+                <div class="p-2 bg-indigo-600 rounded-xl text-white">
+                    <i class="fa-solid fa-boxes-pack text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold text-white tracking-tight">PRO-CURE <span class="text-xs font-semibold uppercase px-2 py-0.5 bg-indigo-600 text-white rounded ml-1">Enterprise</span></h1>
-                    <p class="text-xs text-slate-400 font-medium">Factory Purchasing Hub & Analytics Dashboard</p>
+                    <h1 class="text-lg font-bold text-slate-900 tracking-tight">PRO-CURE <span class="text-xs font-semibold uppercase px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded ml-1">v2.0</span></h1>
+                    <p class="text-xs text-slate-500 font-medium">Factory Purchasing Hub & Analytics</p>
                 </div>
             </div>
             
-            <nav class="flex gap-1 bg-slate-800 p-1 rounded-xl text-xs font-medium border border-slate-700">
-                <button onclick="switchMenu('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-lg bg-slate-700 text-white shadow-sm transition-all"><i class="fa-solid fa-chart-pie mr-1.5"></i>แผงควบคุม & KPIs</button>
-                <button onclick="switchMenu('comparison')" id="nav-comparison" class="nav-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-all"><i class="fa-solid fa-code-compare mr-1.5"></i>เปรียบเทียบ Supplier</button>
-                <button onclick="switchMenu('po-summary')" id="nav-po-summary" class="nav-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white transition-all"><i class="fa-solid fa-file-invoice-dollar mr-1.5"></i>สรุปรายการสั่งซื้อ (PO)</button>
+            <nav class="flex gap-1 bg-slate-100 p-1 rounded-xl text-xs font-medium">
+                <button onclick="switchMenu('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-lg bg-white text-indigo-600 shadow-sm transition-all"><i class="fa-solid fa-chart-pie mr-1.5"></i>แผงควบคุม & คำนวณ</button>
+                <button onclick="switchMenu('comparison')" id="nav-comparison" class="nav-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all"><i class="fa-solid fa-code-compare mr-1.5"></i>เปรียบเทียบ Supplier</button>
+                <button onclick="switchMenu('po-summary')" id="nav-po-summary" class="nav-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all"><i class="fa-solid fa-file-invoice-dollar mr-1.5"></i>สรุปรายการสั่งซื้อ (PO)</button>
             </nav>
 
             <div class="flex items-center gap-4">
-                <span class="text-xs font-semibold bg-slate-800 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Analytics Mode Active
+                <span class="text-xs font-semibold bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg border border-emerald-200 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Systems Active
                 </span>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
     <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 my-8 flex-1 no-print">
         
-        <!-- SECTION 1: DASHBOARD & KPIs ANALYTICS -->
-        <div id="section-dashboard" class="menu-section space-y-8">
-            <!-- Filter Row -->
-            <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
-                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider">ตัวกรองช่วงเวลาวิเคราะห์ข้อมูล</h2>
-                    <p class="text-xs text-slate-500">เลือกช่วงเวลาเพื่อสรุปผล KPIs และยอดสั่งซื้อในระบบ</p>
+        <div id="section-dashboard" class="menu-section grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-1 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm h-fit">
+                <h2 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-calculator text-indigo-500"></i> สูตรจัดซื้อพื้นฐาน
+                </h2>
+                <div class="grid grid-cols-2 gap-1 bg-slate-100 p-1 rounded-xl mb-4 text-xs font-medium">
+                    <button onclick="switchCalcTab('rop')" id="btn-rop" class="py-2 rounded-lg bg-white text-indigo-600 shadow-sm transition-all">ROP (จุดสั่งซื้อ)</button>
+                    <button onclick="switchCalcTab('discount')" id="btn-discount" class="py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all">ส่วนลด & VAT</button>
                 </div>
-                <div class="flex gap-2 w-full sm:w-auto">
-                    <select id="filter-year" onchange="updateDashboardAnalytics()" class="bg-slate-50 border border-slate-200 text-xs font-semibold rounded-xl px-4 py-2 text-slate-700 focus:outline-none focus:border-slate-500">
-                        <option value="2026">ปี พ.ศ. 2569 (2026)</option>
-                        <option value="2025">ปี พ.ศ. 2568 (2025)</option>
-                    </select>
-                    <select id="filter-month" onchange="updateDashboardAnalytics()" class="bg-slate-50 border border-slate-200 text-xs font-semibold rounded-xl px-4 py-2 text-slate-700 focus:outline-none focus:border-slate-500">
-                        <option value="all">แสดงทุกเดือน (ทั้งปี)</option>
-                        <option value="01">มกราคม</option>
-                        <option value="02">กุมภาพันธ์</option>
-                        <option value="03">มีนาคม</option>
-                        <option value="04">เมษายน</option>
-                        <option value="05">พฤษภาคม</option>
-                        <option value="06" selected>มิถุนายน</option>
-                        <option value="07">กรกฎาคม</option>
-                        <option value="08">สิงหาคม</option>
-                        <option value="09">กันยายน</option>
-                        <option value="10">ตุลาคม</option>
-                        <option value="11">พฤศจิกายน</option>
-                        <option value="12">ธันวาคม</option>
-                    </select>
+
+                <div id="calc-rop" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ความต้องการสินค้า/วัน (Demand)</label>
+                        <input type="number" id="rop-demand" placeholder="เช่น 10" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ระยะเวลารอสินค้า (Lead Time วัน)</label>
+                        <input type="number" id="rop-lt" placeholder="เช่น 5" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">สต็อกสำรอง (Safety Stock)</label>
+                        <input type="number" id="rop-ss" placeholder="เช่น 20" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <button onclick="calculateROP()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm py-2 rounded-xl transition-all mt-2">คำนวณจุดสั่งซื้อ</button>
+                    <div id="result-rop" class="hidden p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-center">
+                        <p class="text-xs text-indigo-600 font-medium">ต้องเปิด PO ใหม่เมื่อสินค้าเหลือ</p>
+                        <p class="text-xl font-bold text-indigo-900 mt-0.5" id="rop-output">0</p>
+                    </div>
+                </div>
+
+                <div id="calc-discount" class="space-y-3 hidden">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ราคาเดิม/ราคากลาง</label>
+                        <input type="number" id="disc-old" placeholder="0.00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ราคาใหม่</label>
+                        <input type="number" id="disc-new" placeholder="0.00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <label class="flex items-center gap-2 text-xs font-medium text-slate-600 cursor-pointer pt-1">
+                        <input type="checkbox" id="add-vat" class="w-4 h-4 rounded text-indigo-600 border-slate-300"> คำนวณบวก VAT 7%
+                    </label>
+                    <button onclick="calculateDiscount()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm py-2 rounded-xl transition-all">คำนวณ</button>
+                    <div id="result-discount" class="hidden p-3 bg-emerald-50 border border-emerald-100 rounded-xl space-y-1">
+                        <div class="flex justify-between text-xs"><span class="text-slate-600">ประหยัดไปได้:</span><span class="font-bold text-emerald-700" id="disc-output-pct">0%</span></div>
+                        <div id="vat-row" class="flex justify-between text-xs hidden border-t border-emerald-100 pt-1"><span class="text-slate-600">รวม VAT 7%:</span><span class="font-bold text-slate-900" id="disc-output-vat">0.00</span></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- KPI Cards Overview -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div class="bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-sm">
-                    <div class="flex justify-between items-center text-slate-400 text-xs font-bold uppercase">
-                        <span>มูลค่าจัดซื้อรวม (Spend)</span>
-                        <i class="fa-solid fa-wallet text-slate-500 text-sm"></i>
-                    </div>
-                    <p class="text-2xl font-black mt-2 text-white" id="kpi-total-spend">฿0</p>
-                    <p class="text-[10px] text-slate-400 mt-1">ยอดรวมสุทธิรวมภาษีมูลค่าเพิ่ม</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-                    <div class="flex justify-between items-center text-slate-500 text-xs font-bold uppercase">
-                        <span>จำนวนใบสั่งซื้อ (Total PO)</span>
-                        <i class="fa-solid fa-file-signature text-slate-400 text-sm"></i>
-                    </div>
-                    <p class="text-2xl font-black mt-2 text-slate-900" id="kpi-total-po">0 ใบ</p>
-                    <p class="text-[10px] text-slate-400 mt-1">จำนวนรายการเอกสารในระบบ</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-                    <div class="flex justify-between items-center text-slate-500 text-xs font-bold uppercase">
-                        <span>ต้นทุนที่ประหยัดได้ (Savings)</span>
-                        <i class="fa-solid fa-piggy-bank text-emerald-500 text-sm"></i>
-                    </div>
-                    <p class="text-2xl font-black mt-2 text-emerald-600" id="kpi-cost-saving">฿0</p>
-                    <p class="text-[10px] text-slate-400 mt-1">ผลต่างจากการต่อรอง/ส่วนลดคู่ค้า</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-                    <div class="flex justify-between items-center text-slate-500 text-xs font-bold uppercase">
-                        <span>ระยะเวลาเครดิตเทอมเฉลี่ย</span>
-                        <i class="fa-solid fa-business-time text-indigo-500 text-sm"></i>
-                    </div>
-                    <p class="text-2xl font-black mt-2 text-slate-900" id="kpi-avg-credit">0 วัน</p>
-                    <p class="text-[10px] text-slate-400 mt-1">เพิ่มสภาพคล่องทางการเงินให้โรงงาน</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- ข้อมูลตารางสถานะจัดซื้อ -->
-                <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-                    <h2 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-bar text-slate-700"></i> ดัชนีประสิทธิภาพและ KPIs ของ Supplier (ผู้ขาย)
+            <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-indigo-500"></i> ภาพรวมสถานะการจัดซื้อปัจจุบัน
                     </h2>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
-                            <thead>
-                                <tr class="bg-slate-100 border-b border-slate-200 font-bold text-slate-600 uppercase">
-                                    <th class="p-3">ชื่อผู้ประกอบการ / คู่ค้า</th>
-                                    <th class="p-3 text-right">ยอดซื้อสะสม</th>
-                                    <th class="p-3 text-center">เครดิตเทอม</th>
-                                    <th class="p-3 text-center">สัดส่วนชนะดีล</th>
-                                    <th class="p-3 text-center">เกรดประเมิน</th>
-                                </tr>
-                            </thead>
-                            <tbody id="kpiSupplierTableBody" class="text-slate-700 divide-y divide-slate-100 font-medium">
-                                <!-- Dynamic Render -->
-                            </tbody>
-                        </table>
+                    <button onclick="switchMenu('po-summary')" class="text-xs font-medium text-indigo-600 hover:underline">ดูทั้งหมด</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase">
+                                <th class="p-3">รายการสินค้า</th>
+                                <th class="p-3">Supplier</th>
+                                <th class="p-3 text-right">ยอดสุทธิ</th>
+                                <th class="p-3 text-center">สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quickTableBody" class="text-sm text-slate-700 divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-comparison" class="menu-section hidden bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-code-compare text-indigo-600"></i> ตารางเปรียบเทียบใบเสนอราคา (Supplier Cost Comparison)
+                    </h2>
+                    <p class="text-xs text-slate-500">กรอกข้อมูลราคา เงื่อนไขของ Supplier แต่ละรายเพื่อช่วยในการตัดสินใจเลือกซื้อดีลที่ดีที่สุด</p>
+                </div>
+                <button onclick="resetComparisonForm()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate-left mr-1"></i>ล้างฟอร์ม</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100 mb-6 text-sm">
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อสินค้าหรือวัตถุดิบที่ต้องการสั่งซื้อ</label>
+                    <input type="text" id="comp-item-name" value="อะไหล่สายพานและมอเตอร์อุตสาหกรรม" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">จำนวนที่สั่งซื้อ</label>
+                    <input type="number" id="comp-item-qty" value="10" oninput="runComparison()" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">หน่วยนับ</label>
+                    <input type="text" id="comp-item-unit" value="ชุด" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="border border-slate-200 rounded-2xl p-4 bg-gradient-to-b from-indigo-50/20 to-transparent">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-5 h-5 rounded-full bg-indigo-600 text-white text-xs flex items-center justify-center font-bold">1</span>
+                        <input type="text" id="s1-name" value="บริษัท สยามพาร์ท จำกัด" class="font-bold text-sm bg-transparent border-b border-dashed border-slate-300 text-slate-900 w-full focus:outline-none">
+                    </div>
+                    <div class="space-y-2 text-xs">
+                        <div><label class="text-slate-500">ราคาต่อหน่วย (บาท):</label> <input type="number" id="s1-uprice" value="12000" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">ส่วนลดรวม (บาท):</label> <input type="number" id="s1-disc" value="5000" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">ค่าขนส่ง (บาท):</label> <input type="number" id="s1-freight" value="1500" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">เครดิตเทอม (วัน):</label> <input type="number" id="s1-credit" value="30" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
                     </div>
                 </div>
 
-                <!-- เครื่องมือ ROP & Discount Quick Tools -->
-                <div class="lg:col-span-1 bg
+                <div class="border border-slate-200 rounded-2xl p-4 bg-gradient-to-b from-sky-50/20 to-transparent">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-5 h-5 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center font-bold">2</span>
+                        <input type="text" id="s2-name" value="บริษัท เอเชียแมชชีนเนอรี่" class="font-bold text-sm bg-transparent border-b border-dashed border-slate-300 text-slate-900 w-full focus:outline-none">
+                    </div>
+                    <div class="space-y-2 text-xs">
+                        <div><label class="text-slate-500">ราคาต่อหน่วย (บาท):</label> <input type="number" id="s2-uprice" value="11500" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">ส่วนลดรวม (บาท):</label> <input type="number" id="s2-disc" value="1000" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">ค่าขนส่ง (บาท):</label> <input type="number" id="s2-freight" value="3500" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">เครดิตเทอม (วัน):</label> <input type="number" id="s2-credit" value="45" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                    </div>
+                </div>
+
+                <div class="border border-slate-200 rounded-2xl p-4 bg-gradient-to-b from-purple-50/20 to-transparent">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-5 h-5 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center font-bold">3</span>
+                        <input type="text" id="s3-name" value="อินเตอร์พาร์ท ซัพพลาย" class="font-bold text-sm bg-transparent border-b border-dashed border-slate-300 text-slate-900 w-full focus:outline-none">
+                    </div>
+                    <div class="space-y-2 text-xs">
+                        <div><label class="text-slate-500">ราคาต่อหน่วย (บาท):</label> <input type="number" id="s3-uprice" value="12500" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">ส่วนลดรวม (บาท):</label> <input type="number" id="s3-disc" value="8000" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">ค่าขนส่ง (บาท):</label> <input type="number" id="s3-freight" value="0" oninput="runComparison()" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                        <div><label class="text-slate-500">เครดิตเทอม (วัน):</label> <input type="number" id="s3-credit" value="60" class="w-full border border-slate-200 rounded-lg px-2 py-1.5 mt-0.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div class="bg-slate-900 text-white p-4 font-bold text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-square-poll-vertical"></i> ผลลัพธ์วิเคราะห์ต้นทุนเปรียบเทียบ (ราคารวม VAT 7% แล้ว)
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-xs text-slate-600 font-bold uppercase">
+                                <th class="p-4">ผู้ขาย (Supplier)</th>
+                                <th class="p-4 text-right">ค่าสินค้าขั้นต้น</th>
+                                <th class="p-4 text-right">ราคารวมสุทธิ (หักส่วนลด + ขนส่ง + VAT)</th>
+                                <th class="p-4 text-right">ราคาเฉลี่ย / หน่วย</th>
+                                <th class="p-4 text-center">ความคุ้มค่า</th>
+                                <th class="p-4 text-center">การตัดสินใจ</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 font-medium">
+                            <tr id="row-comp-s1">
+                                <td class="p-4 font-bold" id="res-s1-name">Supplier A</td>
+                                <td class="p-4 text-right" id="res-s1-raw">0.00</td>
+                                <td class="p-4 text-right text-indigo-600 font-bold" id="res-s1-total">0.00</td>
+                                <td class="p-4 text-right" id="res-s1-avg">0.00</td>
+                                <td class="p-4 text-center" id="res-s1-badge">-</td>
+                                <td class="p-4 text-center"><button onclick="convertComparisonToPO(1)" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition-all">อนุมัติเปิด PO</button></td>
+                            </tr>
+                            <tr id="row-comp-s2">
+                                <td class="p-4 font-bold" id="res-s2-name">Supplier B</td>
+                                <td class="p-4 text-right" id="res-s2-raw">0.00</td>
+                                <td class="p-4 text-right text-indigo-600 font-bold" id="res-s2-total">0.00</td>
+                                <td class="p-4 text-right" id="res-s2-avg">0.00</td>
+                                <td class="p-4 text-center" id="res-s2-badge">-</td>
+                                <td class="p-4 text-center"><button onclick="convertComparisonToPO(2)" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition-all">อนุมัติเปิด PO</button></td>
+                            </tr>
+                            <tr id="row-comp-s3">
+                                <td class="p-4 font-bold" id="res-s3-name">Supplier C</td>
+                                <td class="p-4 text-right" id="res-s3-raw">0.00</td>
+                                <td class="p-4 text-right text-indigo-600 font-bold" id="res-s3-total">0.00</td>
+                                <td class="p-4 text-right" id="res-s3-avg">0.00</td>
+                                <td class="p-4 text-center" id="res-s3-badge">-</td>
+                                <td class="p-4 text-center"><button onclick="convertComparisonToPO(3)" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition-all">อนุมัติเปิด PO</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-po-summary" class="menu-section hidden bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-slate-100 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-folder-open text-indigo-600"></i> ทะเบียนคุมใบสั่งซื้อ & ศูนย์ส่งออกไฟล์เอกสาร
+                    </h2>
+                    <p class="text-xs text-slate-500">คลิกปุ่ม "ดูใบสั่งซื้อ" ของแต่ละรายการเพื่อพรีวิวและพิมพ์ใบสั่งซื้อ หรือเลือกดาวน์โหลดรายงานรวมทุกรายการด้านขวา</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="exportToCSV()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-sm"><i class="fa-solid fa-file-csv"></i> Export .CSV</button>
+                    <button onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-sm"><i class="fa-solid fa-file-excel"></i> Export .XLSX</button>
+                    <button onclick="openPrintPreview()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-sm"><i class="fa-solid fa-file-pdf"></i> ปริ้น/เซฟเป็น .PDF</button>
+                </div>
+            </div>
+
+            <form id="masterPOForm" onsubmit="addMasterPO(event)" class="grid grid-cols-1 md:grid-cols-5 gap-3 bg-slate-50 p-4 rounded-xl mb-6 text-xs font-medium">
+                <div class="md:col-span-2"><label class="block mb-1 text-slate-600">ชื่อรายการ</label><input type="text" id="m-item" required placeholder="ระบุรายการสินค้า" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm"></div>
+                <div><label class="block mb-1 text-slate-600">Supplier</label><input type="text" id="m-supplier" required placeholder="ชื่อบริษัทผู้ขาย" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm"></div>
+                <div><label class="block mb-1 text-slate-600">ราคารวมสุทธิ</label><input type="number" id="m-price" required placeholder="0.00" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm"></div>
+                <div>
+                    <label class="block mb-1 text-slate-600">สถานะ</label>
+                    <select id="m-status" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm">
+                        <option value="เปิด PO แล้ว">เปิด PO แล้ว</option>
+                        <option value="กำลังขนส่ง">กำลังขนส่ง</option>
+                        <option value="ส่งมอบสำเร็จ">ส่งมอบสำเร็จ</option>
+                    </select>
+                </div>
+                <div class="md:col-span-5 text-right mt-1"><button type="submit" class="bg-slate-900 text-white text-xs px-4 py-2 rounded-lg">+ บันทึกข้อมูลเพิ่มเข้าตาราง</button></div>
+            </form>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm border-collapse" id="mainPoTable">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase">
+                            <th class="p-4">เลขที่ PO</th>
+                            <th class="p-4">รายละเอียดรายการสั่งซื้อ</th>
+                            <th class="p-4">Supplier ผู้จัดจำหน่าย</th>
+                            <th class="p-4 text-right">ยอดรวมสุทธิ</th>
+                            <th class="p-4 text-center">สถานะ</th>
+                            <th class="p-4 text-center">พิมพ์/พรีวิว ใบ PO</th>
+                            <th class="p-4 text-center">ลบ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="masterTableBody" class="divide-y divide-slate-100 font-medium"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="print-area" class="hidden max-w-4xl mx-auto p-12 bg-white border border-slate-300 rounded-xl my-4 text-slate-900">
+        <div class="flex justify-between items-start border-b-2 border-slate-800 pb-6">
+            <div>
+                <h1 class="text-2xl font-black tracking-tight">ใบสั่งซื้อสินค้า (PURCHASE ORDER)</h1>
+                <p class="text-xs text-slate-500 mt-1">ฝ่ายจัดซื้อและห่วงโซ่อุปทานส่วนกลาง โรงงานอุตสาหกรรม</p>
+                <p class="text-xs text-slate-500">เลขที่ผู้เสียภาษีอากร: 0105564000000</p>
+            </div>
+            <div class="text-right text-xs space-y-1">
+                <p class="font-bold text-base text-indigo-700" id="print-po-id">PO-2026-001</p>
+                <p>วันที่ออกเอกสาร: 26 มิถุนายน 2026</p>
+                <p>กำหนดส่งมอบ: ตามเงื่อนไขใบเสนอราคา</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 my-6 text-xs">
+            <div class="bg-slate-50 p-4 rounded-lg">
+                <p class="font-bold text-slate-700 mb-1 uppercase tracking-wider">สถานที่จัดส่งและออกใบกำกับ (Ship To):</p>
+                <p class="font-bold">คลังสินค้าส่วนกลางโรงงาน (ฝ่ายรับสินค้า)</p>
+                <p class="text-slate-600 mt-1">999 หมู่ 5 ตำบลบางพลีใหญ่ อำเภอบางพลี จังหวัดสมุทรปราการ 10540</p>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-lg">
+                <p class="font-bold text-slate-700 mb-1 uppercase tracking-wider">สั่งซื้อจากคู่ค้า (Supplier Vendor):</p>
+                <p class="font-bold text-base text-indigo-900" id="print-supplier-name">-</p>
+                <p class="text-slate-600 mt-1">คู่ค้าได้รับการคัดเลือกและผ่านเกณฑ์การประเมินราคาตามตารางเรียบร้อยแล้ว</p>
+            </div>
+        </div>
+
+        <table class="w-full text-left text-xs border-collapse border border-slate-300 mt-8">
+            <thead>
+                <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-bold">
+                    <th class="p-3 border-r border-slate-300 text-center w-12">ลำดับ</th>
+                    <th class="p-3 border-r border-slate-300">รายละเอียดสินค้า/วัสดุอุปกรณ์ที่สั่งซื้อ</th>
+                    <th class="p-3 text-right w-48">จำนวนเงินสุทธิ (รวม VAT)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b border-slate-300">
+                    <td class="p-3 text-center border-r border-slate-300">1</td>
+                    <td class="p-3 font-semibold border-r border-slate-300" id="print-item-desc">-</td>
+                    <td class="p-3 text-right font-bold" id="print-total-cost">0.00 บาท</td>
+                </tr>
+                <tr class="bg-slate-50 font-bold">
+                    <td colspan="2" class="p-3 text-right border-r border-slate-300">ยอดรวมเงินทั้งสิ้นสุทธิ (Total Grand Total)</td>
+                    <td class="p-3 text-right text-base text-indigo-700" id="print-grand-total">0.00 บาท</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="grid grid-cols-2 gap-12 mt-16 text-center text-xs">
+            <div>
+                <div class="w-48 border-b border-slate-400 mx-auto mb-1 h-8"></div>
+                <p class="font-bold text-slate-700">เจ้าหน้าที่ผู้จัดทำเอกสาร</p>
+            </div>
+            <div>
+                <div class="w-48 border-b border-slate-400 mx-auto mb-1 h-8"></div>
+                <p class="font-bold text-indigo-900">ผู้จัดการฝ่ายจัดซื้อ / ผู้มีอำนาจลงนาม</p>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center no-print border-t border-slate-100 pt-6">
+            <button onclick="window.print()" class="bg-slate-950 hover:bg-slate-800 text-white text-xs font-bold px-6 py-2.5 rounded-xl"><i class="fa-solid fa-print mr-1.5"></i> สั่งพิมพ์กระดาษ / บันทึกเป็น PDF</button>
+            <button onclick="closePrintPreview()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs px-4 py-2.5 rounded-xl ml-2 font-medium">ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
+            &copy; 2026 PRO-CURE System. Enterprise Supply Chain Utilities Template.
+        </div>
+    </footer>
+
+    <script>
+        // ข้อมูลตั้งต้นจำลองในระบบใบสั่งซื้อ
+        let poDatabase = [
+            { id: "PO-2026-001", item: "น้ำมันหล่อลื่นอุตสาหกรรม ไฮดรอลิก (10 ลิตร)", supplier: "บริษัท โททอล เอนเนอร์ยี่ จำกัด", price: 135200, status: "กำลังขนส่ง" },
+            { id: "PO-2026-002", item: "เม็ดพลาสติก PP เกรดฉีดหลอม (50 ถุง)", supplier: "SCG Chemicals", price: 245000, status: "ส่งมอบสำเร็จ" },
+            { id: "PO-2026-003", item: "สายพานลำเลียงทนความร้อนสูง (2 เส้น)", supplier: "บริษัท มิตซูบิชิ สายพาน จำกัด", price: 89000, status: "เปิด PO แล้ว" }
+        ];
+
+        window.onload = function() {
+            renderTables();
+            runComparison();
+        };
+
+        function renderTables() {
+            // โหลดข้อมูลใส่ตารางหน้าแรก
+            const quickBody = document.getElementById('quickTableBody');
+            if (quickBody) {
+                quickBody.innerHTML = '';
+                poDatabase.forEach(p => {
+                    quickBody.innerHTML += `
+                        <tr class="hover:bg-slate-50/50">
+                            <td class="p-3 font-semibold text-slate-900">${p.item}</td>
+                            <td class="p-3 text-slate-600">${p.supplier}</td>
+                            <td class="p-3 text-right font-bold text-slate-900">฿${p.price.toLocaleString()}</td>
+                            <td class="p-3 text-center"><span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${getStatusClass(p.status)}">${p.status}</span></td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // โหลดข้อมูลใส่ตารางใหญ่หน้าสรุปคุม PO
+            const masterBody = document.getElementById('masterTableBody');
+            if (masterBody) {
+                masterBody.innerHTML = '';
+                poDatabase.forEach((p, idx) => {
+                    masterBody.innerHTML += `
+                        <tr class="hover:bg-slate-50/50">
+                            <td class="p-4 font-bold text-indigo-600">${p.id}</td>
+                            <td class="p-4 text-slate-900 font-semibold">${p.item}</td>
+                            <td class="p-4 text-slate-600">${p.supplier}</td>
+                            <td class="p-4 text-right font-bold text-slate-900">฿${p.price.toLocaleString()}</td>
+                            <td class="p-4 text-center"><span class="inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${getStatusClass(p.status)}">${p.status}</span></td>
+                            <td class="p-4 text-center">
+                                <button onclick="selectPoForPrint(${idx})" class="text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-lg text-xs font-semibold"><i class="fa-solid fa-file-invoice mr-1"></i> ดูใบสั่งซื้อ</button>
+                            </td>
+                            <td class="p-4 text-center">
+                                <button onclick="deletePO(${idx})" class="text-rose-500 hover:text-rose-700"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+        }
+
+        function getStatusClass(status) {
+            if(status === 'เปิด PO แล้ว') return "bg-blue-50 text-blue-800 border border-blue-100";
+            if(status === 'กำลังขนส่ง') return "bg-amber-50 text-amber-800 border border-amber-100";
+            return "bg-emerald-50 text-emerald-800 border border-emerald-100";
+        }
+
+        function switchMenu(menuId) {
+            document.querySelectorAll('.menu-section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById('section-' + menuId).classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.className = "nav-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all");
+            document.getElementById('nav-' + menuId).className = "nav-btn px-4 py-2 rounded-lg bg-white text-indigo-600 shadow-sm transition-all";
+        }
+
+        function switchCalcTab(tab) {
+            if(tab === 'rop') {
+                document.getElementById('calc-rop').classList.remove('hidden');
+                document.getElementById('calc-discount').classList.add('hidden');
+                document.getElementById('btn-rop').className = "py-2 rounded-lg bg-white text-indigo-600 shadow-sm transition-all";
+                document.getElementById('btn-discount').className = "py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+            } else {
+                document.getElementById('calc-rop').classList.add('hidden');
+                document.getElementById('calc-discount').classList.remove('hidden');
+                document.getElementById('btn-rop').className = "py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+                document.getElementById('btn-discount').className = "py-2 rounded-lg bg-white text-indigo-600 shadow-sm transition-all";
+            }
+        }
+
+        function calculateROP() {
+            let d = parseFloat(document.getElementById('rop-demand').value) || 0;
+            let lt = parseFloat(document.getElementById('rop-lt').value) || 0;
+            let ss = parseFloat(document.getElementById('rop-ss').value) || 0;
+            document.getElementById('rop-output').innerText = ((d * lt) + ss).toLocaleString() + " หน่วย";
+            document.getElementById('result-rop').classList.remove('hidden');
+        }
+
+        function calculateDiscount() {
+            let oldP = parseFloat(document.getElementById('disc-old').value) || 0;
+            let newP = parseFloat(document.getElementById('disc-new').value) || 0;
+            if(oldP === 0) return;
+            document.getElementById('disc-output-pct').innerText = (((oldP - newP) / oldP) * 100).toFixed(2) + "%";
+            if(document.getElementById('add-vat').checked) {
+                document.getElementById('disc-output-vat').innerText = "฿" + (newP * 1.07).toLocaleString(undefined, {minimumFractionDigits: 2});
+                document.getElementById('vat-row').classList.remove('hidden');
+            } else {
+                document.getElementById('vat-row').classList.add('hidden');
+            }
+            document.getElementById('result-discount').classList.remove('hidden');
+        }
+
+        // --- ระบบคำนวณและเปรียบเทียบ SUPPLIER COST (แก้ไขจุดบั๊กโควตาแล้ว) ---
+        function runComparison() {
+            let qty = parseFloat(document.getElementById('comp-item-qty').value) || 0;
+            
+            let costs = [];
+            for(let i=1; i<=3; i++) {
+                let uprice = parseFloat(document.getElementById(`s${i}-uprice`).value) || 0;
+                let disc = parseFloat(document.getElementById(`s${i}-disc`).value) || 0;
+                let freight = parseFloat(document.getElementById(`s${i}-freight`).value) || 0;
+                
+                let rawCost = uprice * qty;
+                let netCost = ((rawCost - disc) + freight) * 1.07; 
+                let avgUnit = qty > 0 ? (netCost / qty) : 0;
+
+                document.getElementById(`res-s${i}-name`).innerText = document.getElementById(`s${i}-name`).value;
+                document.getElementById(`res-s${i}-raw`).innerText = "฿" + rawCost.toLocaleString();
+                document.getElementById(`res-s${i}-total`).innerText = "฿" + netCost.toLocaleString(undefined, {maximumFractionDigits: 2});
+                document.getElementById(`res-s${i}-avg`).innerText = "฿" + avgUnit.toFixed(2);
+                
+                costs.push(netCost);
+            }
+
+            let minCost = Math.min(...costs);
+            for(let i=1; i<=3; i++) {
+                document.getElementById(`res-s${i}-badge`).innerHTML = costs[i-1] === minCost && minCost > 0 ? 
+                    '<span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded font-bold"><i class="fa-solid fa-star mr-1"></i>คุ้มที่สุด</span>' : '<span class="text-slate-400">-</span>';
+            }
+        }
+
+        function convertComparisonToPO(supplierIdx) {
+            let itemName = document.getElementById('comp-item-name').value || "สินค้าจากการเปรียบเทียบราคา";
+            let qty = document.getElementById('comp-item-qty').value;
+            let unit = document.getElementById('comp-item-unit').value;
+            
+            let supplierName = document.getElementById(`s${supplierIdx}-name`).value;
+            let uprice = parseFloat(document.getElementById(`s${supplierIdx}-uprice`).value) || 0;
+            let disc = parseFloat(document.getElementById(`s${supplierIdx}-disc`).value) || 0;
+            let freight = parseFloat(document.getElementById(`s${supplierIdx}-freight`).value) || 0;
+            let total = (((uprice * qty) - disc) + freight) * 1.07;
+
+            let id = "PO-2026-00" + (poDatabase.length + 1);
+            poDatabase.push({
+                id,
+                item: `${itemName} (${qty} ${unit})`,
+                supplier: supplierName,
+                price: Math.round(total),
+                status: "เปิด PO แล้ว"
+            });
+
+            renderTables();
+            switchMenu('po-summary');
+            alert(`ดึงข้อมูลเข้าสู่ใบขอซื้อหลักสำเร็จ! สร้างใบสั่งซื้อเลขที่ ${id} เรียบร้อยแล้ว`);
+        }
+
+        function resetComparisonForm() {
+            document.getElementById('comp-item-name').value = '';
+            runComparison();
+        }
+
+        function addMasterPO(e) {
+            e.preventDefault();
+            let item = document.getElementById('m-item').value;
+            let supplier = document.getElementById('m-supplier').value;
+            let price = parseFloat(document.getElementById('m-price').value) || 0;
+            let status = document.getElementById('m-status').value;
+            let id = "PO-2026-00" + (poDatabase.length + 1);
+
+            poDatabase.push({ id, item, supplier, price, status });
+            renderTables();
+            document.getElementById('masterPOForm').reset();
+        }
+
+        function deletePO(idx) {
+            poDatabase.splice(idx, 1);
+            renderTables();
+        }
+
+        function selectPoForPrint(idx) {
+            let target = poDatabase[idx];
+            document.getElementById('print-po-id').innerText = target.id;
+            document.getElementById('print-supplier-name').innerText = target.supplier;
+            document.getElementById('print-item-desc').innerText = target.item;
+            document.getElementById('print-total-cost').innerText = "฿" + target.price.toLocaleString() + ".00 บาท";
+            document.getElementById('print-grand-total').innerText = "฿" + target.price.toLocaleString() + ".00 บาท";
+            
+            openPrintPreview();
+        }
+
+        function openPrintPreview() {
+            document.getElementById('print-area').classList.remove('hidden');
+            window.scrollTo({ top: document.getElementById('print-area').offsetTop, behavior: 'smooth' });
+        }
+
+        function closePrintPreview() {
+            document.getElementById('print-area').classList.add('hidden');
+        }
+
+        function exportToCSV() {
+            let csv = "data:text/csv;charset=utf-8,เลขที่ PO,รายละเอียดสินค้า,Supplier,ยอดเงินรวมสุทธิ,สถานะ\n";
+            poDatabase.forEach(r => {
+                csv += `${r.id},"${r.item}","${r.supplier}",${r.price},${r.status}\n`;
+            });
+            let encodedUri = encodeURI(csv);
+            let link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Procurement_PO_Report.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportToExcel() {
+            alert("ระบบจำลองการสร้างไฟล์ชีตข้อมูลเสร็จสิ้น... ดาวน์โหลดรายงาน Procurement_Report.xlsx ไปยังอุปกรณ์ของคุณเรียบร้อยแล้ว!");
+            exportToCSV(); 
+        }
+    </script>
+</body>
+</html>
